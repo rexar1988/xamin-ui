@@ -1,0 +1,10 @@
+<button class="x-btn x-btn--favorite"
+        type="button"
+        [class.btn--active]="isActive"
+        (click)="toggleStatus()"
+>
+  <span class="x-btn__icon">
+    <ng-content></ng-content>
+  </span>
+  <span *ngIf="label" class="x-btn__label">{{ label }}</span>
+</button>

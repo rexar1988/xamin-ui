@@ -1,0 +1,52 @@
+.dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+
+  &--rtl {
+    direction: rtl;
+  }
+
+  // Position
+  &.dialog--position-top-left {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  &.dialog--position-top {
+    align-items: flex-start;
+  }
+
+  &.dialog--position-top-right {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  &.dialog--position-right {
+    justify-content: flex-end;
+  }
+
+  &.dialog--position-bottom-right {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  &.dialog--position-bottom {
+    align-items: flex-end;
+  }
+
+  &.dialog--position-bottom-left {
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  &.dialog--position-left {
+    justify-content: flex-start;
+  }
+}

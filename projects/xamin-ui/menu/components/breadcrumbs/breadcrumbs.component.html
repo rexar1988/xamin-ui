@@ -1,0 +1,38 @@
+<nav class="x-breadcrumbs">
+  <ul class="x-breadcrumbs__list">
+    <li *ngIf="homeIcon" class="x-breadcrumbs__item x-breadcrumbs__item--home">
+      <a routerLink="/" class="x-breadcrumbs__link x-breadcrumbs__link--home x-breadcrumbs__link-icon--{{ homeIcon }}"></a>
+    </li>
+    <ng-container *ngFor="let link of items; let last = last" >
+      <li class="x-breadcrumbs__item">
+        <ng-container *ngIf="link.action; else label">
+          <ng-container *ngIf="link.action.url">
+            <a [href]="link.action?.url" class="x-breadcrumbs__link x-breadcrumbs__link--a">{{ link.label }}</a>
+          </ng-container>
+          <ng-container *ngIf="link.action.command">
+            <button (click)="link.action.command($event)" class="x-breadcrumbs__link x-breadcrumbs__link--button">
+              {{ link.label }}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="link.action.routerLink">
+            <a [routerLink]="[link.action.routerLink]"
+               [queryParams]="link.action.queryParams"
+               [queryParamsHandling]="link.action.queryParamsHandling ?? ''"
+               class="x-breadcrumbs__link x-breadcrumbs__link--a"
+            >
+              {{ link.label }}
+            </a>
+          </ng-container>
+        </ng-container>
+        <ng-template #label>
+        <span class="x-breadcrumbs__link x-breadcrumbs__link--label">
+          {{ link.label }}
+        </span>
+        </ng-template>
+      </li>
+      <li *ngIf="!last" class="x-breadcrumbs__item x-breadcrumbs__item--separator">
+        <ng-container *ngIf="separator">{{ separator }}</ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

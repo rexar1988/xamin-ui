@@ -1,0 +1,8 @@
+<button class="x-btn x-btn--toggle"
+        type="button"
+        [disabled]="disabled"
+        [class.btn--active]="isActive"
+        (click)="toggleStatus()"
+>
+  <ng-content></ng-content>
+</button>

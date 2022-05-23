@@ -1,0 +1,31 @@
+<div class="dialog"
+     [class.dialog--overlay]="dialogConfig.showOverlay"
+     [class.dialog--rtl]="dialogConfig.rtl"
+     [ngClass]="dialogConfig.cssClasses ?? ''"
+     [mDialogPosition]="this.dialogConfig.position ?? null"
+     (click)="onDialog($event)"
+>
+  <div class="dialog__container"
+       [class.animate__animated]="dialogConfig.animation"
+       [ngStyle]="{ width: dialogConfig.width, height: dialogConfig.height }"
+       [mAnimateDialog]="dialogConfig.animation ?? null"
+  >
+    <header *ngIf="dialogConfig.headerComponent !== false" class="dialog__header">
+      <ng-container *ngIf="dialogConfig.headerComponent; else defaultHeader" mTemplate="headerContainer"></ng-container>
+    </header>
+    <div class="dialog__content">
+      <ng-template mTemplate="contentContainer"></ng-template>
+    </div>
+    <footer *ngIf="dialogConfig.footerComponent !== false" class="dialog__footer">
+      <ng-container *ngIf="dialogConfig.footerComponent; else defaultFooter" mTemplate="footerContainer"></ng-container>
+    </footer>
+  </div>
+</div>
+
+<ng-template #defaultHeader>
+  <x-dialog-header [title]="dialogConfig.title"></x-dialog-header>
+</ng-template>
+
+<ng-template #defaultFooter>
+  <x-dialog-footer class="dialog__footer"></x-dialog-footer>
+</ng-template>

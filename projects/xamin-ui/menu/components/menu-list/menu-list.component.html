@@ -1,0 +1,113 @@
+<div class="menu menu--level-{{ nestingLevel }}">
+  <ul class="menu__list">
+    <li *ngFor="let link of items; let index = index"
+        class="menu__item menu__item--show-on-{{ link.displayType ?? 'dropdown' }}"
+        [class.menu__item--open]="link.open === true && link.children?.length"
+        [class.menu__item--close]="(link.open === undefined || link.open === false) && link.children?.length"
+        [class.menu__item--link]="link.action?.url"
+        [class.menu__item--command]="link.action?.command"
+        [class.menu__item--router]="link.action?.routerLink"
+        [class.menu__item--has-children]="link.children?.length"
+        [hidden]="link.hidden"
+        [attr.id]="link.itemAttributes?.id"
+        (mouseover)="onMouseover(index)"
+        (mouseout)="onMouseout(index)"
+    >
+      <div class="menu__item-content">
+        <ng-container *ngIf="link.action; else label">
+          <ng-container *ngIf="link.action.url">
+            <a [href]="link.action?.url"
+               class="menu__link menu__link--a"
+               [class.menu__link--disabled]="link.disabled"
+               [class.menu__link--expanded]="link.open && (link.displayType !== 'hover')"
+               [class.menu__link--collapsed]="!link.open && (link.displayType === 'hover')"
+               [ngClass]="link.cssClasses ?? []"
+               [ngStyle]="link.cssStyles ?? {}"
+               [attr.target]="link.itemAttributes?.target"
+               [attr.tabindex]="link.itemAttributes?.tabindex"
+            >
+              <span *ngIf="link.icon"
+                    class="menu__link-icon menu__link-icon--{{ link.icon }}"
+              ></span>
+              <span class="menu__link-label">{{ link.label }}</span>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="link.action.command">
+            <button class="menu__link menu__link--button"
+                    [ngClass]="link.cssClasses ?? []"
+                    [ngStyle]="link.cssStyles ?? {}"
+                    [class.menu__link--disabled]="link.disabled"
+                    [class.menu__link--expanded]="link.open && (link.displayType !== 'hover')"
+                    [class.menu__link--collapsed]="!link.open && (link.displayType === 'hover')"
+                    [attr.target]="link.itemAttributes?.target"
+                    [attr.tabindex]="link.itemAttributes?.tabindex"
+                    (click)="link.action.command($event)"
+            >
+              <span *ngIf="link.icon"
+                    class="menu__link-icon menu__link-icon--{{ link.icon }}"
+              ></span>
+              <span class="menu__link-label">{{ link.label }}</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="link.action.routerLink">
+            <a [routerLink]="[link.action.routerLink]"
+               [queryParams]="link.action.queryParams"
+               [queryParamsHandling]="link.action.queryParamsHandling ?? ''"
+               class="menu__link menu__link--router"
+               [ngClass]="link.cssClasses ?? []"
+               [ngStyle]="link.cssStyles ?? {}"
+               [class.menu__link--disabled]="link.disabled"
+               [class.menu__link--expanded]="link.open && (link.displayType !== 'hover')"
+               [class.menu__link--collapsed]="!link.open && (link.displayType === 'hover')"
+               [attr.target]="link.itemAttributes?.target"
+               [attr.tabindex]="link.itemAttributes?.tabindex"
+            >
+              <span *ngIf="link.icon"
+                    class="menu__link-icon menu__link-icon--{{ link.icon }}"
+              ></span>
+              <span class="menu__link-label">{{ link.label }}</span>
+            </a>
+          </ng-container>
+        </ng-container>
+        <ng-template #label>
+          <div *ngIf="link.icon"
+                class="menu__link-icon menu__link-icon--{{ link.icon }}"
+          ></div>
+          <div class="menu__link menu__link--label"
+               [ngClass]="link.cssClasses ?? []"
+               [ngStyle]="link.cssStyles ?? {}"
+               [class.menu__link--disabled]="link.disabled"
+               [class.menu__link--expanded]="link.open && (link.displayType !== 'hover')"
+               [class.menu__link--collapsed]="!link.open && (link.displayType === 'hover')"
+               [attr.target]="link.itemAttributes?.target"
+               [attr.tabindex]="link.itemAttributes?.tabindex"
+               (click)="link.toggleArea !== 'icon' ? onChangeSubMenuStatus(index) : null"
+          >
+            {{ link.label }}
+          </div>
+          <ng-container *ngIf="link.showStatusIcon !== false && link.children?.length"
+          >
+            <div *ngIf="link.toggleArea === 'label'" class="menu__link-status-icon"></div>
+            <button *ngIf="link.toggleArea !== 'label'"
+                    class="menu__link-status-icon"
+                    (click)="onChangeSubMenuStatus(index)"
+            ></button>
+          </ng-container>
+        </ng-template>
+      </div>
+      <div *ngIf="link.children"
+           class="menu__sub-menu"
+           [class.menu__sub-menu--expanded]="link.open"
+           [class.menu__sub-menu--collapsed]="!link.open"
+           [@expandCollapse]="(link.displayType === 'dropdown' || !link.displayType) ? ((link.open ?? false) | menuAnimationParams:transitionOptions) : null"
+           [@hideShow]="(link.displayType === 'click' || link.displayType === 'hover') ? ((link.open ?? false) | menuAnimationParams:transitionOptions) : null"
+           (xIsSubMenu)="onClickOutside($event, index)"
+      >
+        <x-menu-list [items]="link.children"
+                     [transitionOptions]="transitionOptions"
+                     [nestingLevel]="nestingLevel + 1"
+        ></x-menu-list>
+      </div>
+    </li>
+  </ul>
+</div>

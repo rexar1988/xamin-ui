@@ -1,0 +1,28 @@
+.switcher {
+  --switcherHeight: 1.571428571428571em;
+  --toggleSize: 1.2857142857142858em;
+
+  font: {
+    size: 14px;
+  };
+  cursor: pointer;
+  height: var(--switcherHeight);
+  padding: 2px 5px;
+}
+
+.switcher__track {
+  height: 100%;
+  position: relative;
+}
+
+.switcher__toggle {
+  height: var(--toggleSize);
+  width: var(--toggleSize);
+  border-radius: 50%;
+  position: absolute;
+}
+
+
+.switcher__toggle {
+  background-color: red;
+}

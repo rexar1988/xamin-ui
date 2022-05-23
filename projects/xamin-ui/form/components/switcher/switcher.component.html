@@ -1,0 +1,17 @@
+<div class="switcher"
+     [class.switcher--on]="on"
+     [class.switcher--off]="!on"
+     [class.switcher--disabled]="disabled"
+     [ngClass]="cssClasses"
+     [ngStyle]="cssStyles"
+     [style.width]="width"
+     (click)="!disabled ? toggleStatus() : null"
+>
+  <div *ngIf="prefix" class="switcher__prefix">{{ prefix }}</div>
+  <div class="switcher__track">
+    <div class="switcher__toggle"
+         [@onOff]="on | toggleAnimationParams:transitionOptions"
+    ></div>
+  </div>
+  <div *ngIf="suffix" class="switcher__suffix">{{ suffix }}</div>
+</div>

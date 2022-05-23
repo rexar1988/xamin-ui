@@ -1,0 +1,11 @@
+{
+  "$schema": "/node_modules/ng-packagr/ng-package.schema.json",
+  "lib": {
+    "entryFile": "./public-api.ts"
+  },
+  "assets": [
+    "./resources/colors/_buttons.scss",
+    "./resources/elements/_buttons.scss",
+    "./resources/ui-elements.scss"
+  ]
+}
